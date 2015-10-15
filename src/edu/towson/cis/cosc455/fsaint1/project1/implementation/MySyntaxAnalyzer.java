@@ -3,10 +3,16 @@ package edu.towson.cis.cosc455.fsaint1.project1.implementation;
 import edu.towson.cis.cosc455.fsaint1.project1.interfaces.SyntaxAnalyzer;
 
 public class MySyntaxAnalyzer implements SyntaxAnalyzer {
-
+	
 	@Override
 	public void markdown() throws CompilerException {
-		// TODO Auto-generated method stub
+		if(MyCompiler.currentToken.equalsIgnoreCase(Tokens.DOCB)) {
+			// do stuff, get next token
+		}
+		
+		else {
+			// raise error
+		}
 
 	}
 
