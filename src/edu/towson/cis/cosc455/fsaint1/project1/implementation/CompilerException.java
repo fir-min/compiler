@@ -8,6 +8,7 @@ package edu.towson.cis.cosc455.fsaint1.project1.implementation;
  * Developed by Adam Conover (2012) and modified by Josh Dehlinger (2013), used with permission.
  *
  */
+@SuppressWarnings("serial")
 public class CompilerException extends Exception {
 
     /**

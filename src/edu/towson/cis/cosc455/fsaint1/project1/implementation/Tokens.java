@@ -13,7 +13,7 @@ public class Tokens {
 	public static boolean search(String s) {
 		boolean result = false;
 		for(int i = 0; i < TOKENS.length; i++) {
-			if(TOKENS[i].equals(s)) {
+			if(TOKENS[i].equalsIgnoreCase(s)) {
 				result = true;
 				break;
 			}

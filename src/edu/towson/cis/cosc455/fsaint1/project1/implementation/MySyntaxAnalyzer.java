@@ -3,15 +3,34 @@ package edu.towson.cis.cosc455.fsaint1.project1.implementation;
 import edu.towson.cis.cosc455.fsaint1.project1.interfaces.SyntaxAnalyzer;
 
 public class MySyntaxAnalyzer implements SyntaxAnalyzer {
+	MyLexicalAnalyzer lex;
+	MySemanticAnalyzer sem = new MySemanticAnalyzer();
+	public MySyntaxAnalyzer(MyLexicalAnalyzer lex) {
+		this.lex = lex;
+	}
 	
+	public void start() throws CompilerException {
+		while(lex.fileState) {
+			lex.getNextToken();
+			if(lex.lineNum == 1) {
+				mkdBegin();
+			}
+			
+			if(lex.currentToken.charAt(0) == Symbols.HEAD) {
+				head();
+			}
+		}
+	}
 	@Override
-	public void markdown() throws CompilerException {
-		if(MyCompiler.currentToken.equalsIgnoreCase(Tokens.DOCB)) {
-			// do stuff, get next token
+	public void mkdBegin() throws CompilerException {
+		if(lex.currentToken.equalsIgnoreCase(Tokens.DOCB)) {
+			sem.mkdBegin();
 		}
 		
 		else {
-			// raise error
+			throw new CompilerException("Expected " + Tokens.DOCB + " got " +
+										lex.currentToken + " instead a line " +
+										lex.lineNum);
 		}
 
 	}
@@ -105,5 +124,6 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		// TODO Auto-generated method stub
 
 	}
+
 
 }

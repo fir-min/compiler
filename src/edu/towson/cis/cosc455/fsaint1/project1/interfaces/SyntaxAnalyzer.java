@@ -20,7 +20,7 @@ public interface SyntaxAnalyzer {
 	 * This method implements the BNF grammar rule for the document annotation.
 	 * @throws CompilerException
 	 */
-	void markdown() throws CompilerException;
+	void mkdBegin() throws CompilerException;
 
 	/**
 	 * This method implements the BNF grammar rule for the head annotation.
