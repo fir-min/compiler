@@ -1,4 +1,6 @@
-package edu.towson.cis.cosc455.fsaint1.project1.interfaces;
+package edu.towson.cis.cosc455.fsaint1.project1.implementation;
+
+import edu.towson.cis.cosc455.fsaint1.project1.interfaces.LexicalAnalyzer;
 
 public class MyLexicalAnalyzer implements LexicalAnalyzer {
 

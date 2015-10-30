@@ -10,6 +10,15 @@ package edu.towson.cis.cosc455.fsaint1.project1.interfaces;
  * lexical analyzer. You will likely need to add new methods to your implementaion
  * of this interface. 
  * 
+ * 
+ * my notes
+ * 
+ * so get tokens broken up by spaces
+ * check first character if it's in symbols
+ * then it's a lexeme
+ * then check if it's in lexemes
+ * if not generate error
+ * 
  */
  public interface LexicalAnalyzer {
 
