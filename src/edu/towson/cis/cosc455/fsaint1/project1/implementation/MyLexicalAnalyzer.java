@@ -41,15 +41,22 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 	    if(!lineState) {
 	    	getNextLine();
 	    }
+	    
+	    if(isSpace(currentLine.charAt(currentPosition))) {
+			skipBlank();
+		}
 		
 		while(!isSpace(currentLine.charAt(currentPosition))) {
 			getCharacter();
 			addCharacter();
 		}
 		
-		if(isSpace(currentLine.charAt(currentPosition))) {
-			skipBlank();
+		if(!lookupToken()) {
+			System.out.println("Lexical error at " + lineNum);
+			exit();
 		}
+		
+		
 
 	}
 
@@ -88,7 +95,7 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 	@Override
 	public boolean lookupToken() {
 		char c = currentToken.charAt(0);
-		boolean r = false;
+		boolean r = true;
 		if(Symbols.search(c)) {
 			   if(c == Symbols.HASH) {
 				   r = mkdDown(currentLine);

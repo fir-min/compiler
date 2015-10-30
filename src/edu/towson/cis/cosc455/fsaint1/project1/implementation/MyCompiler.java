@@ -19,7 +19,7 @@ public class MyCompiler {
 		
 		MyLexicalAnalyzer lex = new MyLexicalAnalyzer(mkdFile);
 		
-		MySyntaxAnalyzer syn = new SyntaxAnalyzer(lex);
+		MySyntaxAnalyzer syn = new MySyntaxAnalyzer(lex);
 		
 	}
 	

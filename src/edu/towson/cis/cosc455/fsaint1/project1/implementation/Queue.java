@@ -39,8 +39,9 @@ public class Queue {
 	       //n = sPath;
 	       
 	       int x = 0;
+	       
 	       while(x < count) {
-	           r[x] = z.getText();
+	    	   text[x] = z.getText();
 	           z = z.getNext();
 	           
 	           x++;

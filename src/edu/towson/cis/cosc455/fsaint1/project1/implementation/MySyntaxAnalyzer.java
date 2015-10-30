@@ -12,10 +12,18 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	public void start() throws CompilerException {
 		while(lex.fileState) {
 			lex.getNextToken();
+			
+			// very first token #BEGIN
 			if(lex.lineNum == 1) {
 				mkdBegin();
 			}
 			
+			// #END the end of the file
+			if(!lex.fileState) {
+				mkdEnd();
+			}
+			
+			// HEAD
 			if(lex.currentToken.charAt(0) == Symbols.HEAD) {
 				head();
 			}
@@ -34,10 +42,37 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		}
 
 	}
+	
+	public void mkdEnd() throws CompilerException {
+		if(lex.currentToken.equalsIgnoreCase(Tokens.DOCE)) {
+			sem.mkdEnd();
+		}
+		
+		else {
+			throw new CompilerException("Expected " + Tokens.DOCE + " got " +
+										lex.currentToken + " instead a line " +
+										lex.lineNum);
+		}
 
+	}
+	/**
+	 * @param void
+	 * @return void
+	 * checks to see if the head is valid uses the title method
+	 */
 	@Override
 	public void head() throws CompilerException {
-		// TODO Auto-generated method stub
+		String head = "";
+		
+		head += lex.currentToken; // head = "^"
+		
+		lex.getNextToken();
+		
+		
+		
+		/**
+		 * ^ < some text > ^
+		 */
 
 	}
 
