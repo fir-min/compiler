@@ -1,6 +1,6 @@
 package edu.towson.cis.cosc455.fsaint1.project1.implementation;
 
-import java.io.*;
+
 
 // lexical checks only for valid tokens
 
@@ -20,6 +20,13 @@ public class MyCompiler {
 		MyLexicalAnalyzer lex = new MyLexicalAnalyzer(mkdFile);
 		
 		MySyntaxAnalyzer syn = new MySyntaxAnalyzer(lex);
+		
+		try {
+			syn.start();
+		} catch (CompilerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	

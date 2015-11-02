@@ -33,7 +33,7 @@ public interface SyntaxAnalyzer {
 	 * @throws CompilerException
 
 	 */
-	void title() throws CompilerException;
+	String title() throws CompilerException;
 
 	/**
 	 * This method implements the BNF grammar rule for the body annotation.
@@ -81,7 +81,7 @@ public interface SyntaxAnalyzer {
 	 * This method implements the BNF grammar rule for the listitem annotation.
 	 * @throws CompilerException
 	 */
-	void listitem() throws CompilerException;
+	void listItem() throws CompilerException;
 	
 	/**
 	 * This method implements the BNF grammar rule for the inner-item annotation.

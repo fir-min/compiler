@@ -7,7 +7,7 @@ import edu.towson.cis.cosc455.fsaint1.project1.interfaces.LexicalAnalyzer;
 public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 	public String currentLine = "";
 	
-	public int lineNum = 1;
+	public int lineNum = 0;
 	public String currentToken = "";
 	public boolean error = false; // if there is an error
 	public boolean lineState = false; // if the line still has characters
