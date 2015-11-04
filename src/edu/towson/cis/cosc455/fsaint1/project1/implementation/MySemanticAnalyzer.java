@@ -1,6 +1,5 @@
 package edu.towson.cis.cosc455.fsaint1.project1.implementation;
-
-import java.util.Stack;
+ 
 
 /**
  * This will act as the translator
@@ -70,7 +69,7 @@ public class MySemanticAnalyzer {
 	
 	/**
 	 * simply adds the video tag to the program queue
-	 * @param String text => the link for the video file
+	 * @param String text -> the link for the video file
 	 * @return void
 	 */
 	public void video(String text) {

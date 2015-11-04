@@ -1,14 +1,16 @@
 package edu.towson.cis.cosc455.fsaint1.project1.implementation;
 
-import java.util.Stack;
+
 
 import edu.towson.cis.cosc455.fsaint1.project1.interfaces.SyntaxAnalyzer;
 
 public class MySyntaxAnalyzer implements SyntaxAnalyzer {
-	@SuppressWarnings("rawtypes")
+	
 	public Stack varStack = new Stack(); // Stack for the variables
-	MyLexicalAnalyzer lex;
-	MySemanticAnalyzer sem = new MySemanticAnalyzer();
+	public MyLexicalAnalyzer lex;
+	public MySemanticAnalyzer sem = new MySemanticAnalyzer();
+	
+	
 	public MySyntaxAnalyzer(MyLexicalAnalyzer lex) {
 		this.lex = lex;
 	}
@@ -131,9 +133,10 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 
 	}
 	/**
+	 * checks to see if the head is valid uses the title method
 	 * @param void
 	 * @return void
-	 * checks to see if the head is valid uses the title method
+	 * 
 	 */
 	@Override
 	public void head() throws CompilerException {
@@ -186,14 +189,18 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	
 	
 	/**
+	 * checks to see if the title is valid 
 	 * @param void
 	 * @return String
-	 * checks to see if the title is valid 
+	 * @throws CompilerException
+	 * 
 	 */
 	@Override
 	public String title() throws CompilerException {
 		String title = "";
 		lex.getNextToken();
+		
+		
 		
 		while(lex.currentToken.charAt(0) != Symbols.TITLEE) {
 			title += (lex.currentToken + " ");
@@ -205,6 +212,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	}
 
 	@Override
+	//skip
 	public void body() throws CompilerException {
 		// TODO Auto-generated method stub
 
@@ -217,6 +225,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	}
 
 	@Override
+	//skip
 	public void innerText() throws CompilerException {
 		// TODO Auto-generated method stub
 
@@ -249,6 +258,8 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 			lex.getNextToken();
 			
 			varValue = lex.currentToken;
+			
+			varStack.add(String[varName, varValue]);
 		}
 		
 		//sem.addVar(varName, varValue, d)
@@ -279,6 +290,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	}
 
 	@Override
+	//skip
 	public void innerItem() throws CompilerException {
 		// TODO Auto-generated method stub
 
@@ -305,6 +317,12 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	@Override
 	public void newline() throws CompilerException {
 		// TODO Auto-generated method stub
+		/*
+		 * ~
+		 * <br>
+		 */
+		
+		sem.newline();
 
 	}
 

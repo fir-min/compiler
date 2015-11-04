@@ -18,7 +18,6 @@ public class MyCompiler {
 		}
 		
 		MyLexicalAnalyzer lex = new MyLexicalAnalyzer(mkdFile);
-		
 		MySyntaxAnalyzer syn = new MySyntaxAnalyzer(lex);
 		
 		try {
