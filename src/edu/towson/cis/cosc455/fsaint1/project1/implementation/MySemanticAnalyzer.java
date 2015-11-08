@@ -142,5 +142,17 @@ public class MySemanticAnalyzer {
 		prgQ.add(l);
 	}
 	
+	public void innerText(String s) {
+		prgQ.add(s);
+	}
+	
+	public void addParaB() {
+		prgQ.add("<p>");
+	}
+	
+	public void addParaE() {
+		prgQ.add("</p>");
+	}
+	
 	
 }

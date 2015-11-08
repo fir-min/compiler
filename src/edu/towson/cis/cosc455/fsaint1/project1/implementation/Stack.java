@@ -110,6 +110,36 @@ public class Stack {
         return count;
     }
     
+    public String getValue(String x) {
+    	String r = "";
+    	
+        LinkS t = node;
+        
+        if(t.getText()[0].equals(x)) {
+            r = t.getText()[1];
+            
+           
+        }
+        else {
+        
+           while(t.getNext() != null) {
+               t = t.getNext(); 
+               
+               if(t.getText()[0].equals(x)) {
+            	   r = t.getText()[1];
+                   
+                   break;
+               }
+            
+           }
+        }
+        
+        return r;
+        
+        
+        
+    }
+    
     
     public int VarIn(String x) {
          int athena = 0;
