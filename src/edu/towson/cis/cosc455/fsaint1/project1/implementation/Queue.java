@@ -3,7 +3,7 @@ package edu.towson.cis.cosc455.fsaint1.project1.implementation;
 public class Queue {
 	private Link node;
     private Link current;
-    private int count = 0;
+    public int count = 0;
     
 	    public void add(String text) {
 	       //System.out.println(count);

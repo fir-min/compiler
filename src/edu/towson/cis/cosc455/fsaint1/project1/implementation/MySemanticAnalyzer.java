@@ -1,5 +1,7 @@
 package edu.towson.cis.cosc455.fsaint1.project1.implementation;
- 
+
+import java.awt.Desktop;
+import java.io.*;
 
 /**
  * This will act as the translator
@@ -10,6 +12,12 @@ package edu.towson.cis.cosc455.fsaint1.project1.implementation;
 public class MySemanticAnalyzer {
 	public Queue prgQ = new Queue(); // Queue for the program, everything will be translated into it
 	
+	
+	public MySyntaxAnalyzer syn;
+	
+	public MySemanticAnalyzer(MySyntaxAnalyzer syn) {
+		this.syn = syn;
+	}
 	
 	
 	/**
@@ -29,7 +37,45 @@ public class MySemanticAnalyzer {
 	 */
 	public void mkdEnd() {
 		prgQ.add("</html>");
-		//createFile();
+		createFile();
+	}
+	
+	public void createFile() {
+		String fileName = syn.fileName.concat(".html");
+		String[] out = new String[prgQ.count];
+		Writer writer = null;
+		
+		out = prgQ.toArray();
+
+		try {
+		    writer = new BufferedWriter(new OutputStreamWriter(
+		          new FileOutputStream(fileName), "utf-8"));
+		    for(String x: out) {
+		    	writer.write(x);
+		    }
+		    
+		    openHTMLFileInBrowswer(fileName);
+		} catch (IOException ex) {
+		  // report
+		} finally {
+		   try {writer.close();} catch (Exception ex) {/*ignore*/}
+		}
+	}
+	
+	void openHTMLFileInBrowswer(String htmlFileStr){
+		File file= new File(htmlFileStr.trim());
+		if(!file.exists()){
+			System.err.println("File "+ htmlFileStr +" does not exist.");
+			return;
+		}
+		try{
+			Desktop.getDesktop().browse(file.toURI());
+		}
+		catch(IOException ioe){
+			System.err.println("Failed to open file");
+			ioe.printStackTrace();
+		}
+		return ;
 	}
 	
 	

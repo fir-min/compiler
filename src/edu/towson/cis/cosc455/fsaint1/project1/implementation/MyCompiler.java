@@ -5,8 +5,8 @@ package edu.towson.cis.cosc455.fsaint1.project1.implementation;
 // lexical checks only for valid tokens
 
 public class MyCompiler {
-	public static String mkdFile;
-	
+	public static String mkdFile = "C:\\Users\\Yoshimitsu\\Desktop\\COSC 455\\Project 1 Test Cases\\Test2.mkd";
+	/*
 	public static void main(String args[]) {
 		if(args.length == 0) {
 			System.out.println("Please provide file name");
@@ -18,13 +18,29 @@ public class MyCompiler {
 		}
 		
 		MyLexicalAnalyzer lex = new MyLexicalAnalyzer(mkdFile);
-		MySyntaxAnalyzer syn = new MySyntaxAnalyzer(lex);
+		MySyntaxAnalyzer syn = new MySyntaxAnalyzer(lex, mkdFile.substring(0, mkdFile.length()- 5));
 		
 		try {
 			syn.start();
 		} catch (CompilerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			exit();
+		}
+		
+	}
+	*/
+	public static void main(String args[]) {
+		
+		MyLexicalAnalyzer lex = new MyLexicalAnalyzer(mkdFile);
+		MySyntaxAnalyzer syn = new MySyntaxAnalyzer(lex, mkdFile.substring(0, mkdFile.length()- 5));
+		
+		try {
+			syn.start();
+		} catch (CompilerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			exit();
 		}
 		
 	}

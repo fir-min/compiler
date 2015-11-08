@@ -5,14 +5,15 @@ package edu.towson.cis.cosc455.fsaint1.project1.implementation;
 import edu.towson.cis.cosc455.fsaint1.project1.interfaces.SyntaxAnalyzer;
 
 public class MySyntaxAnalyzer implements SyntaxAnalyzer {
-	
+	public String fileName;
 	public Stack varStack = new Stack(); // Stack for the variables
 	public MyLexicalAnalyzer lex;
 	public MySemanticAnalyzer sem = new MySemanticAnalyzer();
 	
 	
-	public MySyntaxAnalyzer(MyLexicalAnalyzer lex) {
+	public MySyntaxAnalyzer(MyLexicalAnalyzer lex, String fileName) {
 		this.lex = lex;
+		this.fileName = fileName;
 	}
 	
 	/**
