@@ -389,13 +389,6 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	 * @throws CompilerException
 	 */
 	public void variableDefine() throws CompilerException {
-		System.out.println("####  Define Define Define");
-		/*
-		 * varName => name of variable
-		 * varValue => value
-		 * needs to use stack to keep track of variables
-		 * 
-		 */
 		String varName;
 		String varValue;
 		
@@ -517,20 +510,60 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	public void listItem() throws CompilerException {
 		lex.getNextToken();
 		
-		String b = lex.currentToken;
+		String b = lex.currentToken.concat(" ");
 		
 		while (!lex.currentToken.equals(Symbols.LISTE)) {
+			
+			
 			lex.getNextToken(); 
-			
-			if(lex.currentToken.charAt(0) != Symbols.LISTE && lex.currentToken.charAt(0) != Symbols.VAR) {
-				b.concat(lex.currentToken).concat(" ");
+			if(lex.currentToken.length() < 1 || lex.currentToken.isEmpty() || lex.currentToken.equals("")) {
+				lex.getNextToken();
+				continue;
 			}
-			
 			else if(lex.currentToken.charAt(0) == Symbols.VAR) {
-				lex.getNextToken();
-				b.concat(lex.currentToken).concat(" ");
-				lex.getNextToken();
+				
+				if(lex.currentToken.equalsIgnoreCase(Tokens.VARB)) {
+					throw new CompilerException("Syntax error " + lex.currentToken + 
+							" at line " +
+							lex.lineNum);
+				}
+				else {
+					if(lex.currentToken.equalsIgnoreCase(Tokens.VARU)) {
+						lex.getNextToken();
+						if(varStack.isIn(lex.currentToken) >= 1) {
+							b.concat(varStack.getValue(lex.currentToken)).concat(" ");
+						}
+						else {
+							throw new CompilerException("Semantic error variable '" + lex.currentToken + "' is not defined at" +
+									" line # " + lex.lineNum);
+						}
+					}
+					
+					if(lex.currentToken.equalsIgnoreCase(Tokens.VARE)) {
+						continue;
+					}
+				}
+//				lex.getNextToken();
+//				b.concat(lex.currentToken).concat(" ");
+//				lex.getNextToken();
 			}
+			else if(lex.currentToken.charAt(0) == Symbols.ADDE || 
+					lex.currentToken.charAt(0) == Symbols.LINKE || 
+					lex.currentToken.charAt(0) == Symbols.PARAE || 
+					lex.currentToken.charAt(0) == Symbols.TITLEE ||
+					lex.currentToken.charAt(0) == Symbols.LINKB || 
+					lex.currentToken.charAt(0) == Symbols.PARAB ||
+					lex.currentToken.charAt(0) == Symbols.ADDB || 
+					lex.currentToken.charAt(0) == Symbols.TITLEB  )
+				
+				throw new CompilerException("Syntax error '" + 
+						lex.currentToken + "' at line " +
+						lex.lineNum);
+			else if(lex.currentToken.charAt(0) != Symbols.LISTE && lex.currentToken.charAt(0) != Symbols.VAR) {
+				b.concat(lex.currentToken).concat(" ");
+			}
+			
+			
 		}
 		
 		sem.listItem(b);
