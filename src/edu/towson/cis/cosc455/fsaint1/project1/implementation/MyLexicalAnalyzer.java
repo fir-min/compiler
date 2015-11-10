@@ -6,16 +6,16 @@ import edu.towson.cis.cosc455.fsaint1.project1.interfaces.LexicalAnalyzer;
 
 public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 	public String currentLine = "";
-	
+	public int tokenCount = 0;
 	public int lineNum = 0;
-	public String currentToken = "";
+	public String currentToken;
 	public boolean error = false; // if there is an error
 	public boolean lineState = false; // if the line still has characters
 	public boolean fileState = true; // if the still has lines
 	public BufferedReader br;
 	
 	
-	public char nextCharacter = 'a';
+	public char nextCharacter;
 
     /** The current position. */
 	public int currentPosition = 0;
@@ -38,47 +38,63 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 	
 	@Override
 	public void getNextToken() {
-	    if(!lineState) {
+		tokenCount++;
+		currentToken = "";
+	    System.out.println("Line State " + lineState);
+	    
+	    if(!currentLine.equals("")) {
+	    	if(currentPosition >= currentLine.length()) {
+	    		lineState = false;
+	    	}
+	    }
+		if(!lineState) {
 	    	getNextLine();
 	    }
 	    
-	    if(isSpace(currentLine.charAt(currentPosition))) {
+	    if(currentPosition < currentLine.length() && isSpace(currentLine.charAt(currentPosition))) {
 			skipBlank();
 		}
 		
-		while(!isSpace(currentLine.charAt(currentPosition))) {
+		while(currentPosition < currentLine.length() && !isSpace(currentLine.charAt(currentPosition)) && fileState) {
 			getCharacter();
 			addCharacter();
 		}
 		
+		
 		if(!lookupToken()) {
-			System.out.println("Lexical error at " + lineNum);
+			System.out.println("Lexical error at line #" + lineNum + " & character # " + currentPosition);
 			exit();
 		}
 		
 		
-
+		
 	}
 
+	
 	@Override
 	public void getCharacter() {
-		if (currentPosition < currentLine.length()) {
-			nextCharacter = currentLine.charAt(currentPosition);
-			currentPosition ++;
-        } else {
+		if (currentPosition >= currentLine.length()) {
+			System.out.println("dfhsdhsdth sagah dhdh");
         	nextCharacter = '\n';
         	lineState = false;
+        } else {
+        	nextCharacter = currentLine.charAt(currentPosition);
+    		currentPosition ++;
+    		System.out.println(nextCharacter);
         }
+		
 
 	}
 	
 	
 	// skips all the blanks characters in a line makes it easier to get the next token;
 	public void skipBlank() {
-		while(isSpace(currentLine.charAt(currentPosition))) {
+		while(currentPosition < currentLine.length() && isSpace(currentLine.charAt(currentPosition))) {
 			currentPosition++;
 			
 		}
+		
+		
 	}
 
 	@Override
@@ -94,24 +110,42 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 
 	@Override
 	public boolean lookupToken() {
-		char c = currentToken.charAt(0);
 		boolean r = true;
-		if(Symbols.search(c)) {
-			   if(c == Symbols.HASH) {
-				   r = mkdDown(currentLine);
-			   }
-			   if(c == Symbols.HASH) {
-				   r = variable(currentLine);
-			   }
+		System.out.println(currentToken + "   this is my token right now");
+		
+		if(currentToken.length() < 1) {
+			return true;
 		}
+		
+		
+		
+		try {
+			char c = currentToken.charAt(0);
+			
+			
+			
+			if(Symbols.search(c)) {
+				   if(c == Symbols.HASH) {
+					   r = mkdDown(currentLine);
+				   }
+				   else if(c == Symbols.HASH) {
+					   r = variable(currentLine);
+				   }
+			}
+		
+		} catch (StringIndexOutOfBoundsException e) {
+			// do nothing
+		}
+		
 		return r;
 	}
 	
 	public void getNextLine() {
 		
-		if(lineState) {
+		if(!lineState) {
 			try {
 				currentLine =  br.readLine();
+				System.out.println(currentLine + " current line" + "  L :" + currentLine.length());
 				currentPosition = 0;
 				lineNum++;
 				lineState = true;

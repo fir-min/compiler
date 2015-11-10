@@ -8,7 +8,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	public String fileName;
 	public Stack varStack = new Stack(); // Stack for the variables
 	public MyLexicalAnalyzer lex;
-	public MySemanticAnalyzer sem = new MySemanticAnalyzer();
+	public MySemanticAnalyzer sem = new MySemanticAnalyzer(this);
 	
 	
 	public MySyntaxAnalyzer(MyLexicalAnalyzer lex, String fileName) {
@@ -37,10 +37,21 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	 * @throws CompilerException
 	 * 
 	 */
+	
+	
+	public void beginingCheck() throws CompilerException{
+		char c = lex.currentToken.charAt(0);
+		if (c == Symbols.ADDE || c == Symbols.LINKE || c == Symbols.PARAE || c == Symbols.TITLEE) {
+			throw new CompilerException("Syntax error at line # " + lex.lineNum + " & character # " + lex.currentPosition);
+		}
+	}
+	
 	public void start() throws CompilerException {
 		while(lex.fileState) {
 			
 			lex.getNextToken();
+			
+			beginingCheck();
 			// very first token #BEGIN
 			if(lex.currentToken.charAt(0) == Symbols.HASH) {
 				mkdBegin();
@@ -81,7 +92,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 				}
 				
 				else {
-					throw new CompilerException("Expected " + Tokens.VARU + " got " +
+					throw new CompilerException("Syntax error Expected " + Tokens.VARU + " got " +
 							lex.currentToken + " instead at line " +
 							lex.lineNum);
 				}
@@ -133,7 +144,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	
 	@Override
 	public void mkdBegin() throws CompilerException {
-		
+		System.out.println("head " + lex.currentToken );
 		
 		if(lex.currentToken.equalsIgnoreCase(Tokens.DOCB)) {
 			sem.mkdBegin();
