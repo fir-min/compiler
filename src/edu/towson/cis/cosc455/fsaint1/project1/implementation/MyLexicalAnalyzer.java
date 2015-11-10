@@ -78,7 +78,7 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 	@Override
 	public void getCharacter() {
 		if (currentPosition >= currentLine.length()) {
-			System.out.println("dfhsdhsdth sagah dhdh");
+			//System.out.println("dfhsdhsdth sagah dhdh");
         	nextCharacter = '\n';
         	lineState = false;
         } else {
@@ -123,16 +123,16 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 		
 		
 		else {
-			System.out.println(currentToken + "*this is my token right now");
-			System.out.println("1st char: " + currentToken.charAt(0));
+			//System.out.println(currentToken + "*this is my token right now");
+			//System.out.println("1st char: " + currentToken.charAt(0));
 			try {
 				char c = currentToken.charAt(0);
 				
-				System.out.println("***1st char: " + currentToken.charAt(0));
+				//System.out.println("***1st char: " + currentToken.charAt(0));
 				
 				if(Symbols.search(c)) {
 					
-					System.out.println("***made it");
+					//System.out.println("***made it");
 					   if(c == Symbols.HASH) {
 						   r = mkdDown();
 					   }
@@ -218,7 +218,7 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 		if(!Tokens.search(currentToken)) {
 			System.out.println("lexical error at " + lineNum + " character number " + currentPosition);
 			error = true;
-			exit();
+			b = false;
 		}
 		else {
 			b = true;

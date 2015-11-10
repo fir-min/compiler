@@ -40,6 +40,10 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	
 	
 	public void beginingCheck() throws CompilerException{
+		if(lex.currentToken.length() < 1 || lex.currentToken.isEmpty() || lex.currentToken.equals("")) {
+			return;
+		}
+		
 		char c = lex.currentToken.charAt(0);
 		if (c == Symbols.ADDE || c == Symbols.LINKE || c == Symbols.PARAE || c == Symbols.TITLEE) {
 			throw new CompilerException("Syntax error at line # " + lex.lineNum + " & character # " + lex.currentPosition);
@@ -50,10 +54,38 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		while(lex.fileState) {
 			
 			lex.getNextToken();
-			
+			System.out.println("CT: " + lex.currentToken);
 			beginingCheck();
 			// very first token #BEGIN
-			if(lex.currentToken.charAt(0) == Symbols.HASH) {
+			
+			if(lex.currentToken.length() < 1 || lex.currentToken.isEmpty() || lex.currentToken.equals("")) {
+				
+				continue;
+			}
+			
+			else if(lex.currentToken.charAt(0) == Symbols.VAR) {
+				System.out.println("Variable " + lex.currentToken +
+						lex.currentToken.equalsIgnoreCase(Tokens.VARB));
+				
+				if(lex.currentToken.equalsIgnoreCase(Tokens.VARB)) {
+					System.out.println("Variable def");
+					variableDefine();
+					
+				}
+				
+				else if(lex.currentToken.equalsIgnoreCase(Tokens.VARU)) {
+					System.out.println("Variable use");
+					variableUse();
+				}
+				
+				else {
+					throw new CompilerException("Syntax error " +
+							lex.currentToken + " at line " +
+							lex.lineNum);
+				}
+			}
+			
+			else if(lex.currentToken.charAt(0) == Symbols.HASH) {
 				mkdBegin();
 			}
 			
@@ -82,21 +114,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 			
 			
 			// use and define variables
-			else if(lex.currentToken.charAt(0) == Symbols.VAR) {
-				if(lex.currentToken.equalsIgnoreCase(Tokens.VARB)) {
-					variableDefine();
-				}
-				
-				else if(lex.currentToken.equalsIgnoreCase(Tokens.VARU)) {
-					variableUse();
-				}
-				
-				else {
-					throw new CompilerException("Syntax error Expected " + Tokens.VARU + " got " +
-							lex.currentToken + " instead at line " +
-							lex.lineNum);
-				}
-			}
+			
 			
 			// list item
 			else if(lex.currentToken.charAt(0) == Symbols.LISTB) {
@@ -144,7 +162,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	
 	@Override
 	public void mkdBegin() throws CompilerException {
-		System.out.println("head " + lex.currentToken );
+		
 		
 		if(lex.currentToken.equalsIgnoreCase(Tokens.DOCB)) {
 			sem.mkdBegin();
@@ -155,6 +173,8 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 										lex.currentToken + " instead a line " +
 										lex.lineNum);
 		}
+		
+		System.out.println("current Token: " + lex.currentToken);
 
 	}
 	
@@ -369,7 +389,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	 * @throws CompilerException
 	 */
 	public void variableDefine() throws CompilerException {
-		
+		System.out.println("####  Define Define Define");
 		/*
 		 * varName => name of variable
 		 * varValue => value
@@ -440,7 +460,8 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 			
 		}
 		else {
-			throw new CompilerException("Syntax error variable " + varN + " is not defined");
+			throw new CompilerException("Semantic error variable '" + varN + "' is not defined at" +
+							" line # " + lex.lineNum);
 		}
 		
 
