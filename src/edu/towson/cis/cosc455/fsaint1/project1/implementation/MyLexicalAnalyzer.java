@@ -25,7 +25,7 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 			br = new BufferedReader(new FileReader(filename));
 		
 		} catch (FileNotFoundException e) {
-			System.out.println("Wrong file name");
+			System.out.println("Wrong file name, please double check the file name");
 			exit();
 		}
 	}
@@ -40,7 +40,8 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 	public void getNextToken() {
 		tokenCount++;
 		currentToken = "";
-	    System.out.println("Line State " + lineState);
+		boolean f = false;
+	    //System.out.println("Line State " + lineState);
 	    
 	    if(!currentLine.equals("")) {
 	    	if(currentPosition >= currentLine.length()) {
@@ -58,13 +59,16 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 		while(currentPosition < currentLine.length() && !isSpace(currentLine.charAt(currentPosition)) && fileState) {
 			getCharacter();
 			addCharacter();
+			f = true;
 		}
 		
-		
-		if(!lookupToken()) {
-			System.out.println("Lexical error at line #" + lineNum + " & character # " + currentPosition);
-			exit();
+		if(f) {
+			if(!lookupToken()) {
+				
+				exit();
+			}
 		}
+		
 		
 		
 		
@@ -80,7 +84,7 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
         } else {
         	nextCharacter = currentLine.charAt(currentPosition);
     		currentPosition ++;
-    		System.out.println(nextCharacter);
+    		//System.out.println(nextCharacter);
         }
 		
 
@@ -111,31 +115,39 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 	@Override
 	public boolean lookupToken() {
 		boolean r = true;
-		System.out.println(currentToken + "   this is my token right now");
 		
-		if(currentToken.length() < 1) {
+		
+		if(currentToken.length() < 1 || currentToken.isEmpty() || currentToken.equals("")) {
 			return true;
 		}
 		
 		
-		
-		try {
-			char c = currentToken.charAt(0);
+		else {
+			System.out.println(currentToken + "*this is my token right now");
+			System.out.println("1st char: " + currentToken.charAt(0));
+			try {
+				char c = currentToken.charAt(0);
+				
+				System.out.println("***1st char: " + currentToken.charAt(0));
+				
+				if(Symbols.search(c)) {
+					
+					System.out.println("***made it");
+					   if(c == Symbols.HASH) {
+						   r = mkdDown();
+					   }
+					   else if(c == Symbols.HASH) {
+						   r = variable();
+					   }
+				}
 			
-			
-			
-			if(Symbols.search(c)) {
-				   if(c == Symbols.HASH) {
-					   r = mkdDown(currentLine);
-				   }
-				   else if(c == Symbols.HASH) {
-					   r = variable(currentLine);
-				   }
+			} catch (StringIndexOutOfBoundsException e) {
+				return true;
 			}
-		
-		} catch (StringIndexOutOfBoundsException e) {
-			// do nothing
 		}
+		
+		
+		
 		
 		return r;
 	}
@@ -145,7 +157,7 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 		if(!lineState) {
 			try {
 				currentLine =  br.readLine();
-				System.out.println(currentLine + " current line" + "  L :" + currentLine.length());
+				System.out.println("*** current line: " + currentLine + "line #: " + (lineNum + 1));
 				currentPosition = 0;
 				lineNum++;
 				lineState = true;
@@ -159,15 +171,15 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 		
 	}
 	
-    public boolean mkdDown(String line) {
+    public boolean mkdDown() {
 		boolean b = true;
 		// very first token
 		if(lineNum == 1) {
 			
 			if(!Tokens.search(currentToken)) {
-				System.out.println("lexical error at " + lineNum + " character number " + currentPosition);
+				System.out.println("Lexical error at line # " + lineNum + " & character # " + currentPosition);
 				error = true;
-				exit();
+				b = false;
 			}
 			else {
 				b = true;
@@ -180,9 +192,9 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 		else {
 			
 			if(!Tokens.search(currentToken)) {
-				System.out.println("lexical error at " + lineNum + " character number " + currentPosition);
+				System.out.println("lexical error at line #" + lineNum + " & character # " + currentPosition);
 				error = true;
-				exit();
+				b = false;
 			}
 			else {
 				fileState = false; // this marks the end of the file;
@@ -200,7 +212,7 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 	 * check to see if the Token beginning with $ is valid
 	 */
 	
-	public boolean variable(String line) {
+	public boolean variable() {
 		boolean b = false;;
 		
 		if(!Tokens.search(currentToken)) {

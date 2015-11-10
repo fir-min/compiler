@@ -273,6 +273,12 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 						lex.lineNum);
 			}
 			
+			else if(lex.currentToken.length() < 1 || lex.currentToken.isEmpty() || lex.currentToken.equals("")) {
+				lex.getNextToken();
+				continue;
+			}
+			
+			
 			// var
 			else if(lex.currentToken.charAt(0) == Symbols.VAR) {
 				if(lex.currentToken.equals(Tokens.VARU)) {
@@ -335,6 +341,8 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 			else {
 				innerText();
 			}
+			
+			lex.getNextToken();
 		}
 		
 		
@@ -414,12 +422,27 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		lex.getNextToken(); // should be the variable name
 		
 		String varN = lex.currentToken;
+		if(varStack.isIn(varN) >= 1) {
+			String value = varStack.getValue(varN);
+			
+			lex.getNextToken(); // should be the variable end token $end
+			
+			if(!lex.currentToken.equals(Tokens.VARE)) {
+				throw new CompilerException("Syntax error, expected " + Tokens.VARE + " got " +
+						lex.currentToken + " instead at line " +
+						lex.lineNum);
+			}
+			
+			else {
+				sem.innerText(varN);
+			}
+			
+			
+		}
+		else {
+			throw new CompilerException("Syntax error variable " + varN + " is not defined");
+		}
 		
-		String value = varStack.getValue(varN);
-		
-		lex.getNextToken(); // should be the variable end token $end
-		
-		sem.innerText(varN);
 
 	}
 	

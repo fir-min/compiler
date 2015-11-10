@@ -141,7 +141,7 @@ public class Stack {
     }
     
     
-    public int VarIn(String x) {
+    public int isIn(String x) {
          int athena = 0;
          LinkS t = node;
          
