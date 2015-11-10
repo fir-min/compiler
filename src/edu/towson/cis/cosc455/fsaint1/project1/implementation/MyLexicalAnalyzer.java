@@ -42,6 +42,10 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 		currentToken = "";
 		boolean f = false;
 	    //System.out.println("Line State " + lineState);
+		
+		if(!fileState) {
+			return;
+		}
 	    
 	    if(!currentLine.equals("")) {
 	    	if(currentPosition >= currentLine.length()) {
@@ -156,15 +160,20 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 		
 		if(!lineState) {
 			try {
+				
+					
 				currentLine =  br.readLine();
 				System.out.println("*** current line: " + currentLine + "line #: " + (lineNum + 1));
 				currentPosition = 0;
 				lineNum++;
 				lineState = true;
+					
+				
 			} catch (IOException e) {
 				fileState = false;
-				
 			}
+			
+			
 		}
 		
 		
@@ -195,6 +204,7 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 				System.out.println("lexical error at line #" + lineNum + " & character # " + currentPosition);
 				error = true;
 				b = false;
+				fileState = false;
 			}
 			else {
 				fileState = false; // this marks the end of the file;

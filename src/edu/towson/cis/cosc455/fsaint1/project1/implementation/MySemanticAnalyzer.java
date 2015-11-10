@@ -41,6 +41,7 @@ public class MySemanticAnalyzer {
 	}
 	
 	public void createFile() {
+		System.out.println("booyakasha");
 		String fileName = syn.fileName.concat(".html");
 		String[] out = new String[prgQ.count];
 		Writer writer = null;
@@ -63,6 +64,7 @@ public class MySemanticAnalyzer {
 	}
 	
 	void openHTMLFileInBrowswer(String htmlFileStr){
+		System.out.println("oh yeahhhh");
 		File file= new File(htmlFileStr.trim());
 		if(!file.exists()){
 			System.err.println("File "+ htmlFileStr +" does not exist.");

@@ -86,15 +86,16 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 			}
 			
 			else if(lex.currentToken.charAt(0) == Symbols.HASH) {
-				mkdBegin();
-			}
-			
-			// #END the end of the file
-			else if(!lex.fileState) {
-				if(lex.currentToken.charAt(0) == Symbols.HASH) {
+				if(lex.currentToken.equalsIgnoreCase(Tokens.DOCB)) {
+					mkdBegin();
+				}
+				else {
 					mkdEnd();
 				}
 			}
+			
+			// #END the end of the file
+		
 			
 			// HEAD
 			else if(lex.currentToken.charAt(0) == Symbols.HEAD) {
