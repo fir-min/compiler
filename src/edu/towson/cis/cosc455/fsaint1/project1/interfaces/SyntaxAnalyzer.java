@@ -35,11 +35,7 @@ public interface SyntaxAnalyzer {
 	 */
 	String title() throws CompilerException;
 
-	/**
-	 * This method implements the BNF grammar rule for the body annotation.
-	 * @throws CompilerException
-	 */
-	void body() throws CompilerException;
+	
 	
 	/**
 	 * This method implements the BNF grammar rule for the paragraph annotation.

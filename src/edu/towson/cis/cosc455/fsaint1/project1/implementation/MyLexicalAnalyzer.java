@@ -5,39 +5,40 @@ import java.io.*;
 import edu.towson.cis.cosc455.fsaint1.project1.interfaces.LexicalAnalyzer;
 
 public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
-	public String currentLine = "";
-	public int tokenCount = 0;
-	public int lineNum = 0;
-	public String currentToken;
+	public String currentLine = ""; // the line we're working with
+	public int tokenCount = 0; // # of tokens
+	public int lineNum = 0; // which line we're on
+	public String currentToken; // the current token
 	public boolean error = false; // if there is an error
 	public boolean lineState = false; // if the line still has characters
 	public boolean fileState = true; // if the still has lines
-	public BufferedReader br;
+	public BufferedReader br; // buffered reader
+	public char nextCharacter; // the next character
+	public int currentPosition = 0; // current position
 	
-	
-	public char nextCharacter;
-
-    /** The current position. */
-	public int currentPosition = 0;
-	
+	/** 
+     * @param the name of the mkd file to be analyzed. 
+     */
 	public MyLexicalAnalyzer (String filename) {
 		try {
 			br = new BufferedReader(new FileReader(filename));
 		
 		} catch (FileNotFoundException e) {
 			System.out.println("Wrong file name, please double check the file name");
-			exit();
+			
 		}
 	}
 	
 	
-	public void exit() {
-		System.exit(0);
-	}
-	
-	
 	@Override
-	public void getNextToken() {
+	/**
+	 * This is the public method to be called when the Syntax Analyzer needs a new
+	 * token to be parsed.
+	 * @param void
+	 * @return void
+	 * @throws CompilerException 
+	 */
+	public void getNextToken() throws CompilerException {
 		tokenCount++;
 		currentToken = "";
 		boolean f = false;
@@ -65,7 +66,8 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 			if(f) {
 				if(!lookupToken()) {
 					
-					exit();
+					throw new CompilerException("lexical error at " + lineNum + 
+							" character number " + currentPosition);
 				}
 			}
 			
@@ -78,6 +80,12 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 
 	
 	@Override
+	/**
+	 * This is method gets the next character from the input and places it in
+	 * the nextCharacter class variable.
+	 * @param void
+	 * @return void
+	 */
 	public void getCharacter() {
 		if (currentPosition >= currentLine.length()) {
 			//System.out.println("dfhsdhsdth sagah dhdh");
@@ -93,7 +101,11 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 	}
 	
 	
-	// skips all the blanks characters in a line makes it easier to get the next token;
+	/**
+	 * Skips all the blank characters
+	 * @param void
+	 * @return void
+	 */
 	public void skipBlank() {
 		while(currentPosition < currentLine.length() && isSpace(currentLine.charAt(currentPosition))) {
 			currentPosition++;
@@ -104,17 +116,32 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 	}
 
 	@Override
+	 /**
+     * This method adds the current character the nextToken.
+     * @param void
+     * @param void
+     */
 	public void addCharacter() {
 		currentToken += nextCharacter;
 
 	}
 
 	@Override
+	/**
+     * checks if the character is a space
+     * @param void
+     * @param void
+     */
 	public boolean isSpace(char c) {
 		return c == ' ';
 	}
 
 	@Override
+	/**
+     * Looks up the token, returns true if valid, false otherwise
+     * @param void
+     * @return boolean
+     */
 	public boolean lookupToken() {
 		boolean r = true;
 		
@@ -154,6 +181,11 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 		return r;
 	}
 	
+	/**
+     * gets the next line and puts it in the currentLine class variable
+     * @param void
+     * @return void
+     */
 	public void getNextLine() {
 		
 		if(!lineState) {
@@ -173,13 +205,19 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 		
 	}
 	
+	/**
+     * checks to see if any token starting with # is valid
+     * @param void
+     * @throws CompilerException
+     * @return true if valid false otherwise
+     */
     public boolean mkdDown() {
 		boolean b = true;
 		// very first token
 		if(lineNum == 1) {
 			
 			if(!Tokens.search(currentToken)) {
-				System.out.println("Lexical error at line # " + lineNum + " & character # " + currentPosition);
+				//System.out.println("Lexical error at line # " + lineNum + " & character # " + currentPosition);
 				error = true;
 				b = false;
 			}
@@ -194,7 +232,7 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 		else {
 			
 			if(!Tokens.search(currentToken)) {
-				System.out.println("lexical error at line #" + lineNum + " & character # " + currentPosition);
+				//System.out.println("lexical error at line #" + lineNum + " & character # " + currentPosition);
 				error = true;
 				b = false;
 			}
@@ -209,9 +247,10 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 	}
 	
 	/**
-	 * @param String line
-	 * @return void
 	 * check to see if the Token beginning with $ is valid
+	 * @param void
+	 * @return true if valid false otherwise
+	 * 
 	 */
 	
 	public boolean variable() {

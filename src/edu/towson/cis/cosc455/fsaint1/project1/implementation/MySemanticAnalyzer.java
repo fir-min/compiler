@@ -15,13 +15,18 @@ public class MySemanticAnalyzer {
 	
 	public MySyntaxAnalyzer syn;
 	
+	/**
+	 * 
+	 * @param Syntax analyzer
+	 * @return void
+	 */
 	public MySemanticAnalyzer(MySyntaxAnalyzer syn) {
 		this.syn = syn;
 	}
 	
 	
 	/**
-	 * simply adds <html> to the program queue
+	 * simply adds the document begin tag to the program queue
 	 * @param void
 	 * @return void
 	 */
@@ -32,7 +37,7 @@ public class MySemanticAnalyzer {
 	
 	
 	/**
-	 * simply adds </html> to the program queue
+	 * simply adds the document end to the program queue and calls createFile
 	 * @param void
 	 * @return void
 	 */
@@ -42,6 +47,11 @@ public class MySemanticAnalyzer {
 		createFile();
 	}
 	
+	/**
+	 * creates the html file
+	 * @param void
+	 * @return void
+	 */
 	public void createFile() {
 		//System.out.println("booyakasha");
 		String fileName = syn.fileName.concat(".html");
@@ -65,6 +75,11 @@ public class MySemanticAnalyzer {
 		}
 	}
 	
+	/**
+	 * opens the html file in the browser
+	 * @param file to be opened 
+	 * @return void
+	 */
 	void openHTMLFileInBrowswer(String htmlFileStr){
 		//System.out.println("oh yeahhhh");
 		File file= new File(htmlFileStr.trim());
@@ -179,7 +194,7 @@ public class MySemanticAnalyzer {
 	
 	/**
 	 * adds list items
-	 * @param String s => list item
+	 * @param String to be added
 	 * @return void
 	 */
 	public void listItem(String s) {
@@ -187,14 +202,29 @@ public class MySemanticAnalyzer {
 		prgQ.add(l);
 	}
 	
+	/**
+	 * adds text to the program queue
+	 * @param String to be added
+	 * @return void
+	 */
 	public void innerText(String s) {
 		prgQ.add(s);
 	}
 	
+	/**
+	 * adds the paragraph begin tag to the queue
+	 * @param String s => list item
+	 * @return void
+	 */
 	public void addParaB() {
 		prgQ.add("<p>\n");
 	}
 	
+	/**
+	 * adds the paragraph end tag to the queue
+	 * @param String s => list item
+	 * @return void
+	 */
 	public void addParaE() {
 		prgQ.add("</p>\n");
 	}

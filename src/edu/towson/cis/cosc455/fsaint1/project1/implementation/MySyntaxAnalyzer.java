@@ -5,12 +5,16 @@ package edu.towson.cis.cosc455.fsaint1.project1.implementation;
 import edu.towson.cis.cosc455.fsaint1.project1.interfaces.SyntaxAnalyzer;
 
 public class MySyntaxAnalyzer implements SyntaxAnalyzer {
-	public String fileName;
+	public String fileName; // name of output file
 	public Stack varStack = new Stack(); // Stack for the variables
-	public MyLexicalAnalyzer lex;
-	public MySemanticAnalyzer sem = new MySemanticAnalyzer(this);
+	public MyLexicalAnalyzer lex; // lexer
+	public MySemanticAnalyzer sem = new MySemanticAnalyzer(this); // semenatics
 	
-	
+	/**
+	 * @param MyLexicalAnalyzer 
+	 * @param String output file name
+	 * 
+	 */
 	public MySyntaxAnalyzer(MyLexicalAnalyzer lex, String fileName) {
 		this.lex = lex;
 		this.fileName = fileName;
@@ -31,15 +35,13 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 
 	/**
 	 * 
-	 * starts the syntax analyzer
+	 * checks for a set of syntax errors at the beginning of each line
 	 * @param void
 	 * @return String
 	 * @throws CompilerException
 	 * 
 	 */
-	
-	
-	public void beginingCheck() throws CompilerException{
+	public void beginningCheck() throws CompilerException{
 		if(lex.currentToken.length() < 1 || lex.currentToken.isEmpty() || lex.currentToken.equals("")) {
 			return;
 		}
@@ -50,12 +52,20 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		}
 	}
 	
+	/**
+	 * 
+	 * starts the syntax analyzer
+	 * @param void
+	 * @return void
+	 * @throws CompilerException
+	 * 
+	 */
 	public void start() throws CompilerException {
 		while(lex.fileState) {
 			
 			lex.getNextToken();
 			//System.out.println("CT: " + lex.currentToken);
-			beginingCheck();
+			beginningCheck();
 			// very first token #BEGIN
 			
 			if(lex.currentToken.length() < 1 || lex.currentToken.isEmpty() || lex.currentToken.equals("")) {
@@ -161,6 +171,10 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	}
 	
 	@Override
+	/**
+	 * This method implements the BNF grammar rule for the document begin annotation.
+	 * @throws CompilerException
+	 */
 	public void mkdBegin() throws CompilerException {
 		
 		
@@ -177,7 +191,10 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		//System.out.println("current Token: " + lex.currentToken);
 
 	}
-	
+	/**
+	 * This method implements the BNF grammar rule for the document end annotation.
+	 * @throws CompilerException
+	 */
 	public void mkdEnd() throws CompilerException {
 		if(lex.currentToken.equalsIgnoreCase(Tokens.DOCE)) {
 			sem.mkdEnd();
@@ -193,7 +210,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	
 	@Override
 	/**
-	 * checks to see if the head is valid uses the title method
+	 * checks to see if the head is valid, uses the title method
 	 * @param void
 	 * @return void
 	 * @throws CompilerException
@@ -272,14 +289,13 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 
 	}
 
-	@Override
-	//skip
-	public void body() throws CompilerException {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	@Override
+	/**
+	 * This method implements the BNF grammar rule for the paragraph annotation.
+	 * @throws CompilerException
+	 */
 	public void paragraph() throws CompilerException {
 		int vars = 0;
 		
@@ -384,7 +400,10 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	}
 
 	@Override
-	//skip
+	/**
+	 * This method implements the BNF grammar rule for the innerText annotation.
+	 * @throws CompilerException
+	 */
 	public void innerText() throws CompilerException {
 		sem.innerText(lex.currentToken + " ");
 	 }
@@ -472,6 +491,13 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 
 	}
 	
+	
+	/**
+	 * This method implements the BNF grammar rule for the variable-use annotation. use within listItem
+	 * @param void
+	 * @return void
+	 * @throws CompilerException
+	 */
 	public String variableUseList() throws CompilerException {
 		lex.getNextToken(); // should be the variable name
 		
@@ -508,6 +534,12 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 
 	
 	@Override
+	/**
+	 * This method implements the BNF grammar rule for the bold annotation.
+	 * @param void
+	 * @return void
+	 * @throws CompilerException
+	 */
 	public void bold() throws CompilerException {
         String b = "";
         
@@ -531,6 +563,12 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	}
 
 	@Override
+	/**
+	 * This method implements the BNF grammar rule for the italics annotation.
+	 * @param void
+	 * @return void
+	 * @throws CompilerException
+	 */
 	public void italics() throws CompilerException {
         String i = "";
         
@@ -554,6 +592,12 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	}
 
 	@Override
+	/**
+	 * This method implements the BNF grammar rule for the list item annotation.
+	 * @param void
+	 * @return void
+	 * @throws CompilerException
+	 */
 	public void listItem() throws CompilerException {
 		//lex.getNextToken();
 		
@@ -621,6 +665,12 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	
 
 	@Override
+	/**
+	 * This method implements the BNF grammar rule for the link annotation.
+	 * @param void
+	 * @return void
+	 * @throws CompilerException
+	 */
 	public void link() throws CompilerException {
 		String name = "";
 		String link = "";
@@ -663,6 +713,12 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	}
 
 	@Override
+	/**
+	 * This method implements the BNF grammar rule for the audio annotation.
+	 * @param void
+	 * @return void
+	 * @throws CompilerException
+	 */
 	public void audio() throws CompilerException {
 		
 		
@@ -688,6 +744,12 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	}
 
 	@Override
+	/**
+	 * This method implements the BNF grammar rule for the video annotation.
+	 * @param void
+	 * @return void
+	 * @throws CompilerException
+	 */
 	public void video() throws CompilerException {
         String t = lex.currentToken;
 		
@@ -711,6 +773,12 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	}
 
 	@Override
+	/**
+	 * This method implements the BNF grammar rule for the newline annotation.
+	 * @param void
+	 * @return void
+	 * @throws CompilerException
+	 */
 	public void newline() throws CompilerException {
 		// TODO Auto-generated method stub
 		/*

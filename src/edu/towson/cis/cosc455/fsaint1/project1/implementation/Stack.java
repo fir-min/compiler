@@ -7,12 +7,17 @@ package edu.towson.cis.cosc455.fsaint1.project1.implementation;
  */
 public class Stack {
     
-    private int count = 0;
-    private LinkS top;
+    private int count = 0; // number of nodes
+    private LinkS top; // top of
     private LinkS node; // very first node
     
     
-    
+    /**
+     * gets the top of stack
+     *@param void
+     *@return the top item of the stack
+     * 
+     */
     public void pop() {
         
         if(count == 0) {
@@ -52,6 +57,13 @@ public class Stack {
         
     }
     
+
+    /**
+     *adds to the stack
+     *@param item to be added
+     *@return void
+     * 
+     */
     public void add(String[] add) {
         //System.out.println(count);
         if(count == 0) {
@@ -70,12 +82,24 @@ public class Stack {
     }
     
     
-    
+
+    /**
+     * returns top of the stack doesn't actually remove it
+     *@param void
+     *@return the top item of the stack
+     * 
+     */
     public String[] getTop() {
         return top.getText();
     }
     
-    
+
+    /**
+     * converts the stack to an array
+     *@param void
+     *@return array representation of stack
+     * 
+     */
     public String[][] array() {
         int count = 1;
         
@@ -105,11 +129,24 @@ public class Stack {
         return r;
     }
     
+
+    /**
+     * 
+     *@param void
+     *@return the number of entries in stack
+     * 
+     */
     public int length() {
         return count;
     }
     
- // searches from bottom of stack to top of stack (first element to last element added)
+
+    /**
+     * searches for a specific item (searches from 1st element to last element)
+     *@param String to search for
+     *@return the value for that string
+     * 
+     */
     public String getValue(String x) {
     	String r = "";
     	
@@ -140,7 +177,12 @@ public class Stack {
         
     }
     
-    // searches from top of stack to bottom of stack (last element to first element added)
+    /**
+     * searches for a specific item (searches from last element to 1st element)
+     *@param String to search for
+     *@return the value for that string
+     * 
+     */
     public String getValue2(String x) {
     	String r = "";
     	
@@ -168,6 +210,12 @@ public class Stack {
         return r;
     }
     
+    /**
+     * check if an item is in the stack
+     *@param String to search for
+     *@return the number of times that item is in the stack
+     * 
+     */
     public int isIn(String x) {
          int athena = 0;
          LinkS t = node;
