@@ -5,7 +5,7 @@ package edu.towson.cis.cosc455.fsaint1.project1.implementation;
 // lexical checks only for valid tokens
 // right update
 public class MyCompiler {
-	public static String mkdFile = "Project 1 Test Cases\\Test8.mkd";
+	public static String mkdFile = "Project 1 Test Cases\\Test10.mkd";
 	public static final String fileExt = ".mkd";
 	/*
 	public static void main(String args[]) {

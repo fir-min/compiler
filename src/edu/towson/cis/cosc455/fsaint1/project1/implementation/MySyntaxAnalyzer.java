@@ -233,9 +233,9 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		
 		if(t) {
 			sem.head(title, true);
-			System.out.println("The title " + title);
+			//System.out.println("The title " + title);
 		} 
-		if(!t) {
+		else {
 			sem.head(head, false);
 		}
 		
@@ -640,6 +640,8 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		}
 		
 		name = l.substring(1, nameE);
+		
+		System.out.println(name + " link name **");
 		
 		if(l.charAt(nameE+1) != Symbols.ADDB) {
 			throw new CompilerException("Syntax error expected " + Symbols.ADDB + " got " +
