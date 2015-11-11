@@ -613,7 +613,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 			
 			
 			lex.getNextToken(); 
-			System.out.println(lex.currentToken + "  &&&  " );
+			//System.out.println(lex.currentToken + "  &&&  " );
 			
 			
 			if(lex.currentToken.equals("" + (Symbols.LISTE))) {

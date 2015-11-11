@@ -23,7 +23,7 @@ public class MyCompiler {
 		
 		else {
 			mkdFile = args[0];
-			System.out.println(mkdFile);
+			//System.out.println(mkdFile);
 		}
 		
 		if(mkdFile.substring(mkdFile.length()- 4).equals(fileExt)) {

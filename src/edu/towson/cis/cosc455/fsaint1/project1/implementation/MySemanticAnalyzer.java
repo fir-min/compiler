@@ -111,7 +111,7 @@ public class MySemanticAnalyzer {
 		
 		if(t) {
 			head = "<head> <title> " + s + " </title> </head>\n";
-			System.out.println("semantic " + head);
+			//System.out.println("semantic " + head);
 			prgQ.add(head);
 		}
 		else {
