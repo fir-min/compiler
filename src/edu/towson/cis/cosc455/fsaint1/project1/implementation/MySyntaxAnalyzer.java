@@ -86,15 +86,15 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 			}
 			
 			else if(lex.currentToken.charAt(0) == Symbols.HASH) {
-				mkdBegin();
-			}
-			
-			// #END the end of the file
-			else if(!lex.fileState) {
-				if(lex.currentToken.charAt(0) == Symbols.HASH) {
+				if(lex.currentToken.equalsIgnoreCase(Tokens.DOCB)) {
+					mkdBegin();
+				}
+				else {
 					mkdEnd();
 				}
 			}
+			
+			
 			
 			// HEAD
 			else if(lex.currentToken.charAt(0) == Symbols.HEAD) {
@@ -286,8 +286,12 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		lex.getNextToken();
 		
 		
-		while (!lex.currentToken.equals(Symbols.PARAE)) {
-			if(lex.currentToken.equals(Symbols.PARAB)) {
+		while (!lex.currentToken.equals("" + (Symbols.PARAE))) {
+			if(lex.currentToken.equals("" + (Symbols.PARAE))) {
+				break;
+			}
+			
+			if(lex.currentToken.equals("" + (Symbols.PARAB))) {
 				throw new CompilerException("Syntax error expected " + Symbols.PARAE + " got " +
 						lex.currentToken + " instead at line " +
 						lex.lineNum);
@@ -512,12 +516,21 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		
 		String b = lex.currentToken.concat(" ");
 		
-		while (!lex.currentToken.equals(Symbols.LISTE)) {
+		while (!lex.currentToken.equals("" + (Symbols.LISTE))) {
 			
 			
 			lex.getNextToken(); 
-			if(lex.currentToken.length() < 1 || lex.currentToken.isEmpty() || lex.currentToken.equals("")) {
-				lex.getNextToken();
+			System.out.println(lex.currentToken + "  &&&  " + Symbols.LISTE);
+			
+			
+			if(lex.currentToken.equals("" + (Symbols.LISTE))) {
+				System.out.println("break");
+				break;
+			}
+			
+			
+			else if(lex.currentToken.length() < 1 || lex.currentToken.isEmpty() || lex.currentToken.equals("")) {
+				//lex.getNextToken();
 				continue;
 			}
 			else if(lex.currentToken.charAt(0) == Symbols.VAR) {
@@ -528,24 +541,9 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 							lex.lineNum);
 				}
 				else {
-					if(lex.currentToken.equalsIgnoreCase(Tokens.VARU)) {
-						lex.getNextToken();
-						if(varStack.isIn(lex.currentToken) >= 1) {
-							b.concat(varStack.getValue(lex.currentToken)).concat(" ");
-						}
-						else {
-							throw new CompilerException("Semantic error variable '" + lex.currentToken + "' is not defined at" +
-									" line # " + lex.lineNum);
-						}
-					}
-					
-					if(lex.currentToken.equalsIgnoreCase(Tokens.VARE)) {
-						continue;
-					}
+					variableUse();
 				}
-//				lex.getNextToken();
-//				b.concat(lex.currentToken).concat(" ");
-//				lex.getNextToken();
+
 			}
 			else if(lex.currentToken.charAt(0) == Symbols.ADDE || 
 					lex.currentToken.charAt(0) == Symbols.LINKE || 
