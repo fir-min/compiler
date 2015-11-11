@@ -42,37 +42,35 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 		currentToken = "";
 		boolean f = false;
 	    //System.out.println("Line State " + lineState);
-		
-		if(!fileState) {
-			return;
-		}
-	    
-	    if(!currentLine.equals("")) {
-	    	if(currentPosition >= currentLine.length()) {
-	    		lineState = false;
-	    	}
-	    }
-		if(!lineState) {
-	    	getNextLine();
-	    }
-	    
-	    if(currentPosition < currentLine.length() && isSpace(currentLine.charAt(currentPosition))) {
-			skipBlank();
-		}
-		
-		while(currentPosition < currentLine.length() && !isSpace(currentLine.charAt(currentPosition)) && fileState) {
-			getCharacter();
-			addCharacter();
-			f = true;
-		}
-		
-		if(f) {
-			if(!lookupToken()) {
-				
-				exit();
+	    if(fileState) {
+	    	if(!currentLine.equals("")) {
+		    	if(currentPosition >= currentLine.length()) {
+		    		lineState = false;
+		    	}
+		    }
+			if(!lineState) {
+		    	getNextLine();
+		    }
+		    
+		    if(currentPosition < currentLine.length() && isSpace(currentLine.charAt(currentPosition))) {
+				skipBlank();
 			}
-		}
-		
+			
+			while(currentPosition < currentLine.length() && !isSpace(currentLine.charAt(currentPosition)) && fileState) {
+				getCharacter();
+				addCharacter();
+				f = true;
+			}
+			
+			if(f) {
+				if(!lookupToken()) {
+					
+					exit();
+				}
+			}
+			
+	    }
+	    
 		
 		
 		
@@ -160,20 +158,15 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 		
 		if(!lineState) {
 			try {
-				
-					
 				currentLine =  br.readLine();
 				System.out.println("*** current line: " + currentLine + "line #: " + (lineNum + 1));
 				currentPosition = 0;
 				lineNum++;
 				lineState = true;
-					
-				
 			} catch (IOException e) {
 				fileState = false;
+				
 			}
-			
-			
 		}
 		
 		
@@ -204,7 +197,6 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 				System.out.println("lexical error at line #" + lineNum + " & character # " + currentPosition);
 				error = true;
 				b = false;
-				fileState = false;
 			}
 			else {
 				fileState = false; // this marks the end of the file;

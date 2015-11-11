@@ -54,7 +54,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		while(lex.fileState) {
 			
 			lex.getNextToken();
-			//System.out.println("CT: " + lex.currentToken);
+			System.out.println("CT: " + lex.currentToken);
 			beginingCheck();
 			// very first token #BEGIN
 			
@@ -86,16 +86,15 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 			}
 			
 			else if(lex.currentToken.charAt(0) == Symbols.HASH) {
-				if(lex.currentToken.equalsIgnoreCase(Tokens.DOCB)) {
-					mkdBegin();
-				}
-				else {
-					mkdEnd();
-				}
+				mkdBegin();
 			}
 			
 			// #END the end of the file
-		
+			else if(!lex.fileState) {
+				if(lex.currentToken.charAt(0) == Symbols.HASH) {
+					mkdEnd();
+				}
+			}
 			
 			// HEAD
 			else if(lex.currentToken.charAt(0) == Symbols.HEAD) {
@@ -180,7 +179,15 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	}
 	
 	public void mkdEnd() throws CompilerException {
-		sem.mkdEnd();
+		if(lex.currentToken.equalsIgnoreCase(Tokens.DOCE)) {
+			sem.mkdEnd();
+		}
+		
+		else {
+			throw new CompilerException("Syntax error expected " + Tokens.DOCE + " got " +
+										lex.currentToken + " instead a line " +
+										lex.lineNum);
+		}
 
 	}
 	
@@ -272,7 +279,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	@Override
 	public void paragraph() throws CompilerException {
 		int vars = 0;
-		System.out.println("Paragraph");
+		
 		
 		sem.addParaB();
 		
@@ -280,7 +287,6 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		
 		
 		while (!lex.currentToken.equals(Symbols.PARAE)) {
-			System.out.println("*CT: " + lex.currentToken);
 			if(lex.currentToken.equals(Symbols.PARAB)) {
 				throw new CompilerException("Syntax error expected " + Symbols.PARAE + " got " +
 						lex.currentToken + " instead at line " +
@@ -288,7 +294,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 			}
 			
 			else if(lex.currentToken.length() < 1 || lex.currentToken.isEmpty() || lex.currentToken.equals("")) {
-				
+				lex.getNextToken();
 				continue;
 			}
 			
@@ -365,7 +371,6 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 			varStack.pop();
 		}
 		
-		System.out.println("End of P");
 		sem.addParaE();
 
 	}
@@ -506,33 +511,20 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		lex.getNextToken();
 		
 		String b = lex.currentToken.concat(" ");
-		System.out.println("%CT: " + lex.currentToken);
+		
 		while (!lex.currentToken.equals(Symbols.LISTE)) {
 			
 			
 			lex.getNextToken(); 
-			System.out.println("%CT: " + lex.currentToken);
-			
-			
-			
 			if(lex.currentToken.length() < 1 || lex.currentToken.isEmpty() || lex.currentToken.equals("")) {
+				lex.getNextToken();
 				continue;
 			}
-			
-			else if(lex.currentToken.charAt(0) == Symbols.LISTE) {
-				sem.listItem(b);
-				return;
-			}
-			
-			else if(lex.currentToken.charAt(0) != Symbols.LISTE && lex.currentToken.charAt(0) != Symbols.VAR) {
-				b.concat(lex.currentToken).concat(" ");
-			}
-			
 			else if(lex.currentToken.charAt(0) == Symbols.VAR) {
 				
 				if(lex.currentToken.equalsIgnoreCase(Tokens.VARB)) {
-					throw new CompilerException("Syntax error '" + lex.currentToken + 
-							"' at line " +
+					throw new CompilerException("Syntax error " + lex.currentToken + 
+							" at line " +
 							lex.lineNum);
 				}
 				else {
@@ -551,7 +543,9 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 						continue;
 					}
 				}
-
+//				lex.getNextToken();
+//				b.concat(lex.currentToken).concat(" ");
+//				lex.getNextToken();
 			}
 			else if(lex.currentToken.charAt(0) == Symbols.ADDE || 
 					lex.currentToken.charAt(0) == Symbols.LINKE || 
@@ -565,8 +559,9 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 				throw new CompilerException("Syntax error '" + 
 						lex.currentToken + "' at line " +
 						lex.lineNum);
-			
-			
+			else if(lex.currentToken.charAt(0) != Symbols.LISTE && lex.currentToken.charAt(0) != Symbols.VAR) {
+				b.concat(lex.currentToken).concat(" ");
+			}
 			
 			
 		}
