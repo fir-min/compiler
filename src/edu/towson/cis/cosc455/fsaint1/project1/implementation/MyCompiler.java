@@ -1,6 +1,11 @@
 package edu.towson.cis.cosc455.fsaint1.project1.implementation;
 
-
+/**
+*
+* @author Firmin Saint-Amour
+* 
+* 
+*/
 public class MyCompiler {
 	public static String mkdFile; // "Project 1 Test Cases\\Test2.mkd";
 	public static final String fileExt = ".mkd";

@@ -3,7 +3,8 @@ package edu.towson.cis.cosc455.fsaint1.project1.implementation;
 
 /**
  *
- * @author fsaint1
+ * @author Firmin Saint-Amour
+ * 
  */
 public class Stack {
     

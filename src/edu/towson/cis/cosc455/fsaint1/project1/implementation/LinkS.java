@@ -3,7 +3,9 @@ package edu.towson.cis.cosc455.fsaint1.project1.implementation;
 
 /**
 *
-* @author fsaint1
+* @author Firmin Saint-Amour
+* 
+*
 */
 public class LinkS {
    
@@ -14,6 +16,8 @@ public class LinkS {
    
    /**
    *@param String[name, value] name of var, and value of var
+   *@param Node, next node
+   *@param Node, previous node
    * 
    */
    public LinkS(String[] text, LinkS next, LinkS last) {

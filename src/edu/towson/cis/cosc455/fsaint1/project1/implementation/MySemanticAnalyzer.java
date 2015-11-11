@@ -1,13 +1,13 @@
 package edu.towson.cis.cosc455.fsaint1.project1.implementation;
-
+/**
+*
+* @author Firmin Saint-Amour
+* 
+*/
 import java.awt.Desktop;
 import java.io.*;
 
-/**
- * This will act as the translator
- * It will convert the mkd components into their respective HTML versions
- *
- */
+
 
 public class MySemanticAnalyzer {
 	public Queue prgQ = new Queue(); // Queue for the program, everything will be translated into it

@@ -1,5 +1,10 @@
 package edu.towson.cis.cosc455.fsaint1.project1.implementation;
-
+/**
+*
+* @author Firmin Saint-Amour
+* 
+* 
+*/
 public class Symbols {
 
 	public static final String BOLD = "**";

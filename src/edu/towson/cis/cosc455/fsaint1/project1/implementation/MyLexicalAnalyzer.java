@@ -1,5 +1,10 @@
 package edu.towson.cis.cosc455.fsaint1.project1.implementation;
-
+/**
+*
+* @author Firmin Saint-Amour
+* 
+* 
+*/
 import java.io.*;
 
 import edu.towson.cis.cosc455.fsaint1.project1.interfaces.LexicalAnalyzer;

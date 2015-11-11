@@ -1,5 +1,12 @@
 package edu.towson.cis.cosc455.fsaint1.project1.implementation;
 
+/**
+*
+* @author Firmin Saint-Amour
+* 
+* 
+*/
+
 
 
 import edu.towson.cis.cosc455.fsaint1.project1.interfaces.SyntaxAnalyzer;
