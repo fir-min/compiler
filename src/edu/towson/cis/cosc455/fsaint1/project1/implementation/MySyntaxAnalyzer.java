@@ -81,17 +81,16 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 			}
 			
 			else if(lex.currentToken.charAt(0) == Symbols.VAR) {
-				System.out.println("Variable " + lex.currentToken +
-						lex.currentToken.equalsIgnoreCase(Tokens.VARB));
+				
 				
 				if(lex.currentToken.equalsIgnoreCase(Tokens.VARB)) {
-					System.out.println("Variable def");
+					//System.out.println("Variable def");
 					variableDefine();
 					
 				}
 				
 				else if(lex.currentToken.equalsIgnoreCase(Tokens.VARU)) {
-					System.out.println("Variable use");
+					//System.out.println("Variable use");
 					variableUse();
 				}
 				
@@ -291,7 +290,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 			lex.getNextToken();
 		}
 		
-		System.out.println(title + "  this is the title");
+		//System.out.println(title + "  this is the title");
 		return title;
 
 	}
