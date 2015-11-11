@@ -54,7 +54,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		while(lex.fileState) {
 			
 			lex.getNextToken();
-			System.out.println("CT: " + lex.currentToken);
+			//System.out.println("CT: " + lex.currentToken);
 			beginingCheck();
 			// very first token #BEGIN
 			
@@ -174,7 +174,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 										lex.lineNum);
 		}
 		
-		System.out.println("current Token: " + lex.currentToken);
+		//System.out.println("current Token: " + lex.currentToken);
 
 	}
 	
@@ -512,27 +512,30 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 
 	@Override
 	public void listItem() throws CompilerException {
-		lex.getNextToken();
+		//lex.getNextToken();
 		
-		String b = lex.currentToken.concat(" ");
+		String b = " ";
 		
 		while (!lex.currentToken.equals("" + (Symbols.LISTE))) {
 			
 			
 			lex.getNextToken(); 
-			System.out.println(lex.currentToken + "  &&&  " + Symbols.LISTE);
+			System.out.println(lex.currentToken + "  &&&  " );
 			
 			
 			if(lex.currentToken.equals("" + (Symbols.LISTE))) {
-				System.out.println("break");
+				//System.out.println("break");
 				break;
 			}
 			
 			
 			else if(lex.currentToken.length() < 1 || lex.currentToken.isEmpty() || lex.currentToken.equals("")) {
-				//lex.getNextToken();
+				
 				continue;
 			}
+			
+			
+			
 			else if(lex.currentToken.charAt(0) == Symbols.VAR) {
 				
 				if(lex.currentToken.equalsIgnoreCase(Tokens.VARB)) {
@@ -557,11 +560,12 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 				throw new CompilerException("Syntax error '" + 
 						lex.currentToken + "' at line " +
 						lex.lineNum);
-			else if(lex.currentToken.charAt(0) != Symbols.LISTE && lex.currentToken.charAt(0) != Symbols.VAR) {
-				b.concat(lex.currentToken).concat(" ");
+			else {
+				b += (lex.currentToken + " ");
+				System.out.println("dsgasghahafhfah rghadh   " + b + "   " +lex.currentToken);
 			}
 			
-			
+			//System.out.println(b + "   bbbb");
 		}
 		
 		sem.listItem(b);

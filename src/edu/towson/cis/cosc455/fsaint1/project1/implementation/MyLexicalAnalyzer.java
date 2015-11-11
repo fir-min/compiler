@@ -159,7 +159,7 @@ public class MyLexicalAnalyzer  implements LexicalAnalyzer  {
 		if(!lineState) {
 			try {
 				currentLine =  br.readLine();
-				System.out.println("*** current line: " + currentLine + "line #: " + (lineNum + 1));
+				//System.out.println("*** current line: " + currentLine + "line #: " + (lineNum + 1));
 				currentPosition = 0;
 				lineNum++;
 				lineState = true;

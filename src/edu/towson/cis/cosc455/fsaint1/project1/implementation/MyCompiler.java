@@ -5,7 +5,7 @@ package edu.towson.cis.cosc455.fsaint1.project1.implementation;
 // lexical checks only for valid tokens
 // right update
 public class MyCompiler {
-	public static String mkdFile = "Project 1 Test Cases\\Test2.mkd";
+	public static String mkdFile = "Project 1 Test Cases\\Test6.mkd";
 	public static final String fileExt = ".mkd";
 	/*
 	public static void main(String args[]) {
@@ -37,7 +37,7 @@ public class MyCompiler {
 		
 		if(mkdFile.substring(mkdFile.length()- 4).equals(fileExt)) {
 			MyLexicalAnalyzer lex = new MyLexicalAnalyzer(mkdFile);
-			MySyntaxAnalyzer syn = new MySyntaxAnalyzer(lex, mkdFile.substring(mkdFile.length()- 4));
+			MySyntaxAnalyzer syn = new MySyntaxAnalyzer(lex, mkdFile.substring(0, mkdFile.length()- 4));
 			
 			try {
 				syn.start();
