@@ -27,6 +27,7 @@ public class MySemanticAnalyzer {
 	 */
 	public void mkdBegin() {
 		prgQ.add("<html>\n");
+		prgQ.add("<body>\n");
 	}
 	
 	
@@ -36,12 +37,13 @@ public class MySemanticAnalyzer {
 	 * @return void
 	 */
 	public void mkdEnd() {
+		prgQ.add("</body>\n");
 		prgQ.add("</html>");
 		createFile();
 	}
 	
 	public void createFile() {
-		System.out.println("booyakasha");
+		//System.out.println("booyakasha");
 		String fileName = syn.fileName.concat(".html");
 		String[] out = new String[prgQ.count];
 		Writer writer = null;
@@ -64,7 +66,7 @@ public class MySemanticAnalyzer {
 	}
 	
 	void openHTMLFileInBrowswer(String htmlFileStr){
-		System.out.println("oh yeahhhh");
+		//System.out.println("oh yeahhhh");
 		File file= new File(htmlFileStr.trim());
 		if(!file.exists()){
 			System.err.println("File "+ htmlFileStr +" does not exist.");
@@ -93,12 +95,12 @@ public class MySemanticAnalyzer {
 		String head;
 		
 		if(t) {
-			head = "<head> <title> " + s + " </title> </head>";
+			head = "<head> <title> " + s + " </title> </head>\n";
 			System.out.println("semantic " + head);
 			prgQ.add(head);
 		}
 		else {
-			head = "<head> " + s + " </head>";
+			head = "<head> " + s + " </head>\n";
 			prgQ.add(head);
 		}
 		
@@ -124,7 +126,7 @@ public class MySemanticAnalyzer {
 	 * @return void
 	 */
 	public void video(String text) {
-		String video = "<iframe src=" + text + "/>";
+		String video = "<iframe src=" + text + "/>\n";
 		
 		prgQ.add(video);
 	}
@@ -136,7 +138,7 @@ public class MySemanticAnalyzer {
 	 * @return void
 	 */
 	public void newline() {
-		String n = "<br> ";
+		String n = "<br> \n";
 		prgQ.add(n);
 				
 	}
@@ -148,7 +150,7 @@ public class MySemanticAnalyzer {
 	 * @return void
 	 */
 	public void link(String l, String value) {
-		String link = "<a href=" + value + ">" + l + " </a>";
+		String link = "<a href=" + value + ">" + l + " </a>\n";
 		prgQ.add(link);
 	}
 	
@@ -159,7 +161,7 @@ public class MySemanticAnalyzer {
 	 * @return void
 	 */
 	public void bold(String s) {
-		String b = "<b> " + s + "</b>";
+		String b = "<b> " + s + "</b>\n";
 		prgQ.add(b);
 	}
 	
@@ -169,19 +171,11 @@ public class MySemanticAnalyzer {
 	 * @return void
 	 */
 	public void italics(String s) {
-		String b = "<i> " + s + "</i>";
+		String b = "<i> " + s + "</i>\n";
 		prgQ.add(b);
 	}
 	
-	/**
-	 * adds a paragraph
-	 * @param String s => what will be in the paragraph
-	 * @return void
-	 */
-	public void paragraph(String s) {
-		String para = "<p>" + s + "</p>";
-		prgQ.add(para);
-	}
+	
 	
 	/**
 	 * adds list items
@@ -189,7 +183,7 @@ public class MySemanticAnalyzer {
 	 * @return void
 	 */
 	public void listItem(String s) {
-		String l = "<li> " + s + " </li>";
+		String l = "<li> " + s + " </li>\n";
 		prgQ.add(l);
 	}
 	
@@ -198,11 +192,11 @@ public class MySemanticAnalyzer {
 	}
 	
 	public void addParaB() {
-		prgQ.add("<p>");
+		prgQ.add("<p>\n");
 	}
 	
 	public void addParaE() {
-		prgQ.add("</p>");
+		prgQ.add("</p>\n");
 	}
 	
 	

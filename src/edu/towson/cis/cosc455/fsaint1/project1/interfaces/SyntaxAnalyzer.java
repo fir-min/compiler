@@ -83,11 +83,7 @@ public interface SyntaxAnalyzer {
 	 */
 	void listItem() throws CompilerException;
 	
-	/**
-	 * This method implements the BNF grammar rule for the inner-item annotation.
-	 * @throws CompilerException
-	 */
-	void innerItem() throws CompilerException;
+	
 
 	/**
 	 * This method implements the BNF grammar rule for the link annotation.

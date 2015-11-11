@@ -313,9 +313,10 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 				}
 				
 				if(lex.currentToken.equals(Tokens.VARB)) {
+					vars++;
 					variableDefine();
 					
-					vars++;
+					
 				}
 				
 				
@@ -443,7 +444,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		
 		String varN = lex.currentToken; // name  of variable
 		if(varStack.isIn(varN) >= 1) {
-			String value = varStack.getValue(varN); // value
+			String value = varStack.getValue2(varN); // value
 			
 			lex.getNextToken(); // should be the variable end token $end
 			System.out.println(lex.currentToken + " var use");
@@ -476,7 +477,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		
 		String varN = lex.currentToken; // name  of variable
 		if(varStack.isIn(varN) >= 1) {
-			String value = varStack.getValue(varN); // value
+			String value = varStack.getValue2(varN); // value
 			
 			lex.getNextToken(); // should be the variable end token $end
 			System.out.println(lex.currentToken + " var use");
@@ -504,6 +505,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 
 	}
 	
+
 	
 	@Override
 	public void bold() throws CompilerException {
@@ -613,13 +615,10 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		sem.listItem(b);
 
 	}
+	
+	
 
-	@Override
-	//skip
-	public void innerItem() throws CompilerException {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	@Override
 	public void link() throws CompilerException {

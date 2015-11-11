@@ -9,7 +9,7 @@ public class Stack {
     
     private int count = 0;
     private LinkS top;
-    private LinkS node;
+    private LinkS node; // very first node
     
     
     
@@ -39,7 +39,7 @@ public class Stack {
             
         }
         
-        z.setNext(new LinkS(t.getText(), null));
+        z.setNext(new LinkS(t.getText(), null, z));
         
         
         top = z.getNext();
@@ -55,12 +55,12 @@ public class Stack {
     public void add(String[] add) {
         //System.out.println(count);
         if(count == 0) {
-            node = new LinkS(add, null);
+            node = new LinkS(add, null, null);
             top = node;
             
         }
         else {
-            top.setNext(new LinkS(add, null));
+            top.setNext(new LinkS(add, null, top));
             top = top.getNext();
             
         }
@@ -109,6 +109,7 @@ public class Stack {
         return count;
     }
     
+ // searches from bottom of stack to top of stack (first element to last element added)
     public String getValue(String x) {
     	String r = "";
     	
@@ -139,6 +140,33 @@ public class Stack {
         
     }
     
+    // searches from top of stack to bottom of stack (last element to first element added)
+    public String getValue2(String x) {
+    	String r = "";
+    	
+        LinkS t = top;
+        
+        if(t.getText()[0].equals(x)) {
+            r = t.getText()[1];
+            
+           
+        }
+        else {
+        
+           while(t.getLast() != null) {
+               t = t.getLast(); 
+               
+               if(t.getText()[0].equals(x)) {
+            	   r = t.getText()[1];
+                   
+                   break;
+               }
+            
+           }
+        }
+        
+        return r;
+    }
     
     public int isIn(String x) {
          int athena = 0;
