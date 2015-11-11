@@ -472,7 +472,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 			String value = varStack.getValue2(varN); // value
 			
 			lex.getNextToken(); // should be the variable end token $end
-			System.out.println(lex.currentToken + " var use");
+			//System.out.println(lex.currentToken + " var use");
 			if(!lex.currentToken.equals(Tokens.VARE)) {
 				throw new CompilerException("Syntax error, expected " + Tokens.VARE + " got " +
 						lex.currentToken + " instead at line " +
@@ -512,7 +512,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 			String value = varStack.getValue2(varN); // value
 			
 			lex.getNextToken(); // should be the variable end token $end
-			System.out.println(lex.currentToken + " var use");
+			//System.out.println(lex.currentToken + " var use");
 			if(!lex.currentToken.equals(Tokens.VARE)) {
 				throw new CompilerException("Syntax error, expected " + Tokens.VARE + " got " +
 						lex.currentToken + " instead at line " +
