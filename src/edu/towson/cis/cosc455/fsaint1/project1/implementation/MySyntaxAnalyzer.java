@@ -233,7 +233,8 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		
 		if(t) {
 			sem.head(title, true);
-		}
+			System.out.println("The title " + title);
+		} 
 		if(!t) {
 			sem.head(head, false);
 		}
@@ -261,10 +262,12 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		
 		
 		while(lex.currentToken.charAt(0) != Symbols.TITLEE) {
-			title.concat(lex.currentToken).concat(" ");
+			
+			title += (lex.currentToken + " ");
 			lex.getNextToken();
 		}
 		
+		System.out.println(title + "  this is the title");
 		return title;
 
 	}
@@ -438,12 +441,12 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 	public void variableUse() throws CompilerException {
 		lex.getNextToken(); // should be the variable name
 		
-		String varN = lex.currentToken;
+		String varN = lex.currentToken; // name  of variable
 		if(varStack.isIn(varN) >= 1) {
-			String value = varStack.getValue(varN);
+			String value = varStack.getValue(varN); // value
 			
 			lex.getNextToken(); // should be the variable end token $end
-			
+			System.out.println(lex.currentToken + " var use");
 			if(!lex.currentToken.equals(Tokens.VARE)) {
 				throw new CompilerException("Syntax error, expected " + Tokens.VARE + " got " +
 						lex.currentToken + " instead at line " +
@@ -451,7 +454,11 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 			}
 			
 			else {
-				sem.innerText(varN);
+				sem.innerText(value + " ");
+				
+				
+				
+				
 			}
 			
 			
@@ -463,6 +470,40 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 		
 
 	}
+	
+	public String variableUseList() throws CompilerException {
+		lex.getNextToken(); // should be the variable name
+		
+		String varN = lex.currentToken; // name  of variable
+		if(varStack.isIn(varN) >= 1) {
+			String value = varStack.getValue(varN); // value
+			
+			lex.getNextToken(); // should be the variable end token $end
+			System.out.println(lex.currentToken + " var use");
+			if(!lex.currentToken.equals(Tokens.VARE)) {
+				throw new CompilerException("Syntax error, expected " + Tokens.VARE + " got " +
+						lex.currentToken + " instead at line " +
+						lex.lineNum);
+			}
+			
+			else {
+				return value;
+				
+				
+				
+				
+			}
+			
+			
+		}
+		else {
+			throw new CompilerException("Semantic error variable '" + varN + "' is not defined at" +
+							" line # " + lex.lineNum);
+		}
+		
+
+	}
+	
 	
 	@Override
 	public void bold() throws CompilerException {
@@ -544,7 +585,8 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 							lex.lineNum);
 				}
 				else {
-					variableUse();
+					b += (variableUseList() + " ");
+					
 				}
 
 			}
@@ -562,7 +604,7 @@ public class MySyntaxAnalyzer implements SyntaxAnalyzer {
 						lex.lineNum);
 			else {
 				b += (lex.currentToken + " ");
-				System.out.println("dsgasghahafhfah rghadh   " + b + "   " +lex.currentToken);
+				//System.out.println("dsgasghahafhfah rghadh   " + b + "   " +lex.currentToken);
 			}
 			
 			//System.out.println(b + "   bbbb");

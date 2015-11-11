@@ -94,12 +94,15 @@ public class MySemanticAnalyzer {
 		
 		if(t) {
 			head = "<head> <title> " + s + " </title> </head>";
+			System.out.println("semantic " + head);
+			prgQ.add(head);
 		}
 		else {
 			head = "<head> " + s + " </head>";
+			prgQ.add(head);
 		}
 		
-		prgQ.add(head);
+		
 	}
 	
 	/**
@@ -186,7 +189,7 @@ public class MySemanticAnalyzer {
 	 * @return void
 	 */
 	public void listItem(String s) {
-		String l = "<li>" + s + "</li>";
+		String l = "<li> " + s + " </li>";
 		prgQ.add(l);
 	}
 	
